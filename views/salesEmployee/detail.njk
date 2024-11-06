@@ -4,6 +4,8 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
+{% set fullName = [salesEmployee.firstName, " ", salesEmployee.lastName] | join %}
+
 {% block beforeContent %}
     {{ super() }}
 
@@ -18,7 +20,7 @@
                 href: "/sales-employees"
             },
             {
-                text: salesEmployee.firstName + " " + salesEmployee.lastName,
+                text: fullName,
                 href: "/sales-employees/" + salesEmployee.salesEmployeeId
             }
         ]
@@ -26,7 +28,7 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="govuk-heading-xl">Viewing: {{ salesEmployee.firstName }} {{ salesEmployee.lastName }}</h1>
+  <h1 class="govuk-heading-xl">Viewing: {{ fullName }}</h1>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -67,7 +69,7 @@
               },
               {
                 key: {
-                  text: "NIN"
+                  text: "National Insurance Number"
                 },
                 value: {
                   text: salesEmployee.nationalInsuranceNo

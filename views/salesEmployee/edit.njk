@@ -4,6 +4,8 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
+{% set fullName = [salesEmployee.firstName, " ", salesEmployee.lastName] | join %}
+
 {% block beforeContent %}
     {{ super() }}
 
@@ -18,7 +20,7 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       
-        <h1 class="govuk-heading-xl">Editing: {{ salesEmployee.firstName }} {{ salesEmployee.lastName }}</h1>
+        <h1 class="govuk-heading-xl">Editing: {{ fullName }}</h1>
 
         <form class="form" method="post">
 
@@ -31,7 +33,7 @@
                 name: "fullName",
                 autocomplete: "name",
                 spellcheck: false,
-                value: salesEmployee.firstName + " " + salesEmployee.lastName
+                value: fullName
             }) }}
 
             {{ govukInput({

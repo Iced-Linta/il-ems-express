@@ -1,37 +1,32 @@
 import express from "express";
 import { createSalesEmployee, deleteSalesEmployee, editSalesEmployee, getSalesEmployee, getSalesEmployees } from "../services/SalesEmployeeService";
 
-export const getAllSalesEmployees = async (req: express.Request, res: express.Response): Promise<void> => {
+export const getSalesEmployeeList = async (req: express.Request, res: express.Response): Promise<void> => {
     return res.render('salesEmployee/list.njk', { salesEmployees: await getSalesEmployees() });
 }
 
-export const getSingleSalesEmployee = async (req: express.Request, res: express.Response): Promise<void> => {
-    const salesEmployee = await getSalesEmployee(req.params.id);
-    if (!salesEmployee) return res.render('errors/404.njk');
-    return res.render('salesEmployee/detail.njk', { salesEmployee });
+export const getSalesEmployeeDetail = async (req: express.Request, res: express.Response): Promise<void> => {
+    return res.render('salesEmployee/detail.njk', { salesEmployee: await getSalesEmployee(req.params.id) });
 }
 
-export const getSingleSalesEmployeeToDelete = async (req: express.Request, res: express.Response): Promise<void> => {
-    const salesEmployee = await getSalesEmployee(req.params.id);
-    if (!salesEmployee) return res.render('errors/404.njk');
-    return res.render('salesEmployee/delete.njk', { salesEmployee });
+export const getSalesEmployeeDeleteForm = async (req: express.Request, res: express.Response): Promise<void> => {
+    return res.render('salesEmployee/delete.njk', { salesEmployee: await getSalesEmployee(req.params.id) });
 }
 
-export const deleteSingleSalesEmployee = async (req: express.Request, res: express.Response): Promise<void> => {
-    const salesEmployee = await getSalesEmployee(req.params.id);
+export const postSalesEmployeeDeleteForm = async (req: express.Request, res: express.Response): Promise<void> => {
     try {
         await deleteSalesEmployee(req.params.id);
         return res.render('salesEmployee/deleteSuccess.njk');
     } catch (e) {
-        return res.render('salesEmployee/delete.njk', { salesEmployee, error: e });
+        return res.render('salesEmployee/delete.njk', { salesEmployee: await getSalesEmployee(req.params.id), error: e });
     }
 }
 
-export const getCreateSingleSalesEmployee = async (req: express.Request, res: express.Response): Promise<void> => {
+export const getSalesEmployeeCreateForm = async (req: express.Request, res: express.Response): Promise<void> => {
     return res.render('salesEmployee/create.njk');
 }
 
-export const postCreateSingleSalesEmployee = async (req: express.Request, res: express.Response): Promise<void> => {
+export const postSalesEmployeeCreateForm = async (req: express.Request, res: express.Response): Promise<void> => {
     try {
         const salesEmployeeId = await createSalesEmployee(req.body);
         return res.render('salesEmployee/createSuccess.njk', { salesEmployeeId });
@@ -40,18 +35,15 @@ export const postCreateSingleSalesEmployee = async (req: express.Request, res: e
     }
 }
 
-export const getSingleSalesEmployeeToEdit = async (req: express.Request, res: express.Response): Promise<void> => {
-    const salesEmployee = await getSalesEmployee(req.params.id);
-    if (!salesEmployee) return res.render('errors/404.njk');
-    return res.render('salesEmployee/edit.njk', { salesEmployee });
+export const getSalesEmployeeEditForm = async (req: express.Request, res: express.Response): Promise<void> => {
+    return res.render('salesEmployee/edit.njk', { salesEmployee: await getSalesEmployee(req.params.id) });
 }
 
-export const postEditSingleSalesEmployee = async (req: express.Request, res: express.Response): Promise<void> => {
-    const salesEmployee = await getSalesEmployee(req.params.id);
+export const postSalesEmployeeEditForm = async (req: express.Request, res: express.Response): Promise<void> => {
     try {
         await editSalesEmployee(req.body, req.params.id);
         return res.render('salesEmployee/editSuccess.njk');
     } catch (e) {
-        return res.render('salesEmployee/edit.njk', { salesEmployee, error: e });
+        return res.render('salesEmployee/edit.njk', { salesEmployee: await getSalesEmployee(req.params.id), error: e });
     }
 }

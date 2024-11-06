@@ -32,8 +32,11 @@
             <tbody class="govuk-table__body">
         
                 {% for salesEmployee in salesEmployees %}
+
+                    {% set fullName = [salesEmployee.firstName, " ", salesEmployee.lastName] | join %}
+
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__header"><a href="/sales-employees/{{salesEmployee.salesEmployeeId}}">{{ salesEmployee.firstName }} {{ salesEmployee.lastName }}</a></td>
+                        <td class="govuk-table__header"><a href="/sales-employees/{{salesEmployee.salesEmployeeId}}">{{ fullName }}</a></td>
                         <td class="govuk-table__cell">{{ salesEmployee.commissionRate | percentage }}%</td>
                       </tr>
                 {% endfor %}

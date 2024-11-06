@@ -3,16 +3,16 @@ import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
 import session from "express-session";
 
-import { getAllDatabases } from "./controllers/TestController";
-import { deleteSingleSalesEmployee, getAllSalesEmployees, getCreateSingleSalesEmployee, getSingleSalesEmployee, getSingleSalesEmployeeToDelete, getSingleSalesEmployeeToEdit, postCreateSingleSalesEmployee, postEditSingleSalesEmployee } from "./controllers/SalesEmployeeController";
 import { percentageFilter } from "./filter/PercentageFilter";
 import { currencyFilter } from "./filter/CurrencyFilter";
+import { getSalesEmployeeCreateForm, getSalesEmployeeDeleteForm, getSalesEmployeeDetail, getSalesEmployeeEditForm, getSalesEmployeeList, postSalesEmployeeCreateForm, postSalesEmployeeDeleteForm, postSalesEmployeeEditForm } from "./controllers/SalesEmployeeController";
+import { checkSalesEmployeeExists } from "./middleware/CheckSalesEmployeeExistsMiddleware";
 
 const app = express();
 
 const env = nunjucks.configure([
-  "node_modules/govuk-frontend/dist",
-  "views"
+  'node_modules/govuk-frontend/dist',
+  'views'
 ], {
     autoescape: true,
     express: app
@@ -41,13 +41,11 @@ app.listen(3000, () => {
     console.log('Server started on port 3000');
 });
 
-app.get('/', getAllDatabases);
-
-app.get('/sales-employees', getAllSalesEmployees);
-app.get('/sales-employees/create', getCreateSingleSalesEmployee);
-app.post('/sales-employees/create', postCreateSingleSalesEmployee);
-app.get('/sales-employees/:id', getSingleSalesEmployee);
-app.get('/sales-employees/delete/:id', getSingleSalesEmployeeToDelete);
-app.post('/sales-employees/delete/:id', deleteSingleSalesEmployee);
-app.get('/sales-employees/edit/:id', getSingleSalesEmployeeToEdit);
-app.post('/sales-employees/edit/:id', postEditSingleSalesEmployee);
+app.get('/sales-employees', getSalesEmployeeList);
+app.get('/sales-employees/create', getSalesEmployeeCreateForm);
+app.post('/sales-employees/create', postSalesEmployeeCreateForm);
+app.get('/sales-employees/:id', checkSalesEmployeeExists(), getSalesEmployeeDetail);
+app.get('/sales-employees/delete/:id', checkSalesEmployeeExists(), getSalesEmployeeDeleteForm);
+app.post('/sales-employees/delete/:id', checkSalesEmployeeExists(), postSalesEmployeeDeleteForm);
+app.get('/sales-employees/edit/:id', checkSalesEmployeeExists(), getSalesEmployeeEditForm);
+app.post('/sales-employees/edit/:id', checkSalesEmployeeExists(), postSalesEmployeeEditForm);
