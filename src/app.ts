@@ -3,21 +3,33 @@ import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
 import session from "express-session";
 
-import { getAllDatabases } from "./controllers/TestController";
+import { percentageFilter } from "./filter/PercentageFilter";
+import { currencyFilter } from "./filter/CurrencyFilter";
+import { getSalesEmployeeCreateForm, getSalesEmployeeDeleteForm, getSalesEmployeeDetail, getSalesEmployeeEditForm, getSalesEmployeeList, postSalesEmployeeCreateForm, postSalesEmployeeDeleteForm, postSalesEmployeeEditForm } from "./controllers/SalesEmployeeController";
+import { checkSalesEmployeeExists } from "./middleware/CheckSalesEmployeeExistsMiddleware";
 
 const app = express();
 
-nunjucks.configure('views', {
+const env = nunjucks.configure([
+  'node_modules/govuk-frontend/dist',
+  'views'
+], {
     autoescape: true,
     express: app
 });
 
+env.addFilter('percentage', percentageFilter);
+env.addFilter('currency', currencyFilter);
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: true
-}))
+}));
 
-app.use(session({ secret: 'SUPER_SECRET', cookie: { maxAge: 28800000 }}));
+app.use(express.static('node_modules/govuk-frontend/dist/govuk/'));
+app.use(express.static('node_modules/govuk-frontend/dist/govuk/assets'));
+
+app.use(session({ secret: process.env.SESSION_SECRET, cookie: { maxAge: 28800000 }}));
 
 declare module "express-session" {
   interface SessionData {
@@ -29,4 +41,11 @@ app.listen(3000, () => {
     console.log('Server started on port 3000');
 });
 
-app.get('/', getAllDatabases);
+app.get('/sales-employees', getSalesEmployeeList);
+app.get('/sales-employees/create', getSalesEmployeeCreateForm);
+app.post('/sales-employees/create', postSalesEmployeeCreateForm);
+app.get('/sales-employees/:id', checkSalesEmployeeExists(), getSalesEmployeeDetail);
+app.get('/sales-employees/delete/:id', checkSalesEmployeeExists(), getSalesEmployeeDeleteForm);
+app.post('/sales-employees/delete/:id', checkSalesEmployeeExists(), postSalesEmployeeDeleteForm);
+app.get('/sales-employees/edit/:id', checkSalesEmployeeExists(), getSalesEmployeeEditForm);
+app.post('/sales-employees/edit/:id', checkSalesEmployeeExists(), postSalesEmployeeEditForm);

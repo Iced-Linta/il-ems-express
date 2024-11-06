@@ -1,0 +1,97 @@
+{% extends "templates/layout.njk" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set fullName = [salesEmployee.firstName, " ", salesEmployee.lastName] | join %}
+
+{% block beforeContent %}
+    {{ super() }}
+
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home",
+                href: "/"
+            },
+            {
+                text: "Sales Employees",
+                href: "/sales-employees"
+            },
+            {
+                text: fullName,
+                href: "/sales-employees/" + salesEmployee.salesEmployeeId
+            }
+        ]
+        }) }}
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">Viewing: {{ fullName }}</h1>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+         
+                {{ govukSummaryList({
+            rows: [
+            {
+                key: {
+                  text: "Employee number"
+                },
+                value: {
+                  text: salesEmployee.salesEmployeeId
+                }
+              },
+              {
+                key: {
+                  text: "Salary"
+                },
+                value: {
+                  text: "£" + salesEmployee.salary | currency
+                }
+              },
+              {
+                key: {
+                  text: "Commission rate"
+                },
+                value: {
+                  text: salesEmployee.commissionRate | percentage + "%"
+                }
+              },
+              {
+                key: {
+                  text: "IBAN"
+                },
+                value: {
+                  text: salesEmployee.bankAccountNo
+                }
+              },
+              {
+                key: {
+                  text: "National Insurance Number"
+                },
+                value: {
+                  text: salesEmployee.nationalInsuranceNo
+                }
+              }
+            ]
+          }) }}
+
+            <form action="/sales-employees/edit/{{ salesEmployee.salesEmployeeId }}">
+          {{ govukButton({
+            text: "Edit employee",
+            classes: "govuk-button--secondary"
+        }) }}
+          </form>
+
+          <form action="/sales-employees/delete/{{ salesEmployee.salesEmployeeId }}">
+          {{ govukButton({
+            text: "Delete employee",
+            classes: "govuk-button--warning"
+        }) }}
+          </form>
+
+    </div>
+  </div>
+{% endblock %}
