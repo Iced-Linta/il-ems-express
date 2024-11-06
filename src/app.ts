@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static('node_modules/govuk-frontend/dist/govuk/'));
 app.use(express.static('node_modules/govuk-frontend/dist/govuk/assets'));
 
-app.use(session({ secret: 'SUPER_SECRET', cookie: { maxAge: 28800000 }}));
+app.use(session({ secret: process.env.SESSION_SECRET, cookie: { maxAge: 28800000 }}));
 
 declare module "express-session" {
   interface SessionData {
