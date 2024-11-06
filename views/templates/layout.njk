@@ -1,0 +1,50 @@
+{% extends "govuk/template.njk" %}
+
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/footer/macro.njk" import govukFooter %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+{% block head %}
+  <link rel="stylesheet" href="/govuk-frontend.min.css">
+{% endblock %}
+
+{% block header %}
+    {{ govukHeader({
+        homepageUrl: "/",
+        serviceName: "Iced Linta Employee Management",
+        serviceUrl: "/"
+    }) }}
+    {{ govukServiceNavigation({
+        navigation: [
+          {
+            href: "/sales-employees",
+            text: "Sales Employees",
+            active: true
+          }
+        ]
+      }) }}
+{% endblock %}
+
+{% block beforeContent %}
+    {{ govukPhaseBanner({
+        tag: {
+            text: "Alpha"
+        },
+        html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+    }) }}
+{% endblock %}
+
+{{ govukFooter({}) }}
+
+{% block bodyEnd %}
+  {# Run JavaScript at end of the <body>, to avoid blocking the initial render. #}
+  <script type="module" src="/govuk-frontend.min.js"></script>
+  <script type="module">
+    import { initAll } from '/govuk-frontend.min.js'
+    initAll()
+  </script>
+{% endblock %}
