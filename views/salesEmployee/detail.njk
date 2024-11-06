@@ -7,9 +7,9 @@
 {% set fullName = [salesEmployee.firstName, " ", salesEmployee.lastName] | join %}
 
 {% block beforeContent %}
-    {{ super() }}
+  {{ super() }}
 
-    {{ govukBreadcrumbs({
+  {{ govukBreadcrumbs({
         items: [
             {
                 text: "Home",
@@ -21,7 +21,7 @@
             },
             {
                 text: fullName,
-                href: "/sales-employees/" + salesEmployee.salesEmployeeId
+                href: `/sales-employees/${salesEmployee.salesEmployeeId}`
             }
         ]
         }) }}
@@ -32,8 +32,8 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-         
-                {{ govukSummaryList({
+
+      {{ govukSummaryList({
             rows: [
             {
                 key: {
@@ -78,19 +78,19 @@
             ]
           }) }}
 
-            <form action="/sales-employees/edit/{{ salesEmployee.salesEmployeeId }}">
-          {{ govukButton({
+      <form action="/sales-employees/edit/{{ salesEmployee.salesEmployeeId }}">
+        {{ govukButton({
             text: "Edit employee",
             classes: "govuk-button--secondary"
         }) }}
-          </form>
+      </form>
 
-          <form action="/sales-employees/delete/{{ salesEmployee.salesEmployeeId }}">
-          {{ govukButton({
+      <form action="/sales-employees/delete/{{ salesEmployee.salesEmployeeId }}">
+        {{ govukButton({
             text: "Delete employee",
             classes: "govuk-button--warning"
         }) }}
-          </form>
+      </form>
 
     </div>
   </div>

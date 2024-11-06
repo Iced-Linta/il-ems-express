@@ -18,7 +18,6 @@ export const getSalesEmployee = async (id: String): Promise<SalesEmployeeRespons
 
         return response.data;
     } catch (e) {
-        if (e == "AxiosError: Request failed with status code 404") return null;
         throw new Error('Failed to get sales employee');
     }
 }
@@ -29,7 +28,6 @@ export const deleteSalesEmployee = async (id: String): Promise<void> => {
 
         return response.data;
     } catch (e) {
-        if (e == "AxiosError: Request failed with status code 404") return null;
         throw new Error('Failed to delete sales employee');
     }
 }
@@ -47,7 +45,6 @@ export const createSalesEmployee = async (salesEmployee: SalesEmployeeRequest): 
 
         return response.data;
     } catch (e) {
-        if (e == "AxiosError: Request failed with status code 404") return null;
         throw new Error('Failed to delete sales employee');
     }
 }
