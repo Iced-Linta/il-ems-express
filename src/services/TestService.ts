@@ -6,7 +6,6 @@ export const getDatabases = async (): Promise<string[]> => {
 
         return response.data;
     } catch (e) {
-        console.log(e);
         throw new Error('Failed to get databases');
     }
 }

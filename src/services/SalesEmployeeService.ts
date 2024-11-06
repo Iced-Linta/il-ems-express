@@ -8,7 +8,6 @@ export const getSalesEmployees = async (): Promise<SalesEmployeeResponse[]> => {
 
         return response.data;
     } catch (e) {
-        console.log(e);
         throw new Error('Failed to get sales employees');
     }
 }
