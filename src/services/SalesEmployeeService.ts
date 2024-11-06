@@ -34,3 +34,21 @@ export const deleteSalesEmployee = async (id: String): Promise<void> => {
         throw new Error('Failed to delete sales employee');
     }
 }
+
+export const createSalesEmployee = async (salesEmployee: SalesEmployeeRequest): Promise<number> => {
+    try {
+        const salesEmployeeRequest = {
+            ...salesEmployee,
+            firstName: salesEmployee.fullName.split(' ')[0],
+            lastName: salesEmployee.fullName.split(' ').slice(1).join(' '),
+            commissionRate: salesEmployee.commissionRatePercentage / 100
+        };
+
+        const response: AxiosResponse = await axios.post("http://localhost:8080/api/sales-employee", salesEmployeeRequest);
+
+        return response.data;
+    } catch (e) {
+        if (e == "AxiosError: Request failed with status code 404") return null;
+        throw new Error('Failed to delete sales employee');
+    }
+}

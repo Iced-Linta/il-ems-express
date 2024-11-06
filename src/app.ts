@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import session from "express-session";
 
 import { getAllDatabases } from "./controllers/TestController";
-import { deleteSingleSalesEmployee, getAllSalesEmployees, getCreateSingleSalesEmployee, getSingleSalesEmployee, getSingleSalesEmployeeToDelete } from "./controllers/SalesEmployeeController";
+import { deleteSingleSalesEmployee, getAllSalesEmployees, getCreateSingleSalesEmployee, getSingleSalesEmployee, getSingleSalesEmployeeToDelete, postCreateSingleSalesEmployee } from "./controllers/SalesEmployeeController";
 import { percentageFilter } from "./filter/PercentageFilter";
 import { currencyFilter } from "./filter/CurrencyFilter";
 

@@ -1,5 +1,5 @@
 import express from "express";
-import { deleteSalesEmployee, getSalesEmployee, getSalesEmployees } from "../services/SalesEmployeeService";
+import { createSalesEmployee, deleteSalesEmployee, getSalesEmployee, getSalesEmployees } from "../services/SalesEmployeeService";
 
 export const getAllSalesEmployees = async (req: express.Request, res: express.Response): Promise<void> => {
     return res.render('salesEmployee/list.njk', { salesEmployees: await getSalesEmployees() });
@@ -29,4 +29,13 @@ export const deleteSingleSalesEmployee = async (req: express.Request, res: expre
 
 export const getCreateSingleSalesEmployee = async (req: express.Request, res: express.Response): Promise<void> => {
     return res.render('salesEmployee/create.njk');
+}
+
+export const postCreateSingleSalesEmployee = async (req: express.Request, res: express.Response): Promise<void> => {
+    try {
+        const salesEmployeeId = await createSalesEmployee(req.body);
+        return res.render('salesEmployee/createSuccess.njk', { salesEmployeeId });
+    } catch (e) {
+        return res.render('salesEmployee/create.njk', { error: e });
+    }
 }
