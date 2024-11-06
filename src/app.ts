@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import session from "express-session";
 
 import { getAllDatabases } from "./controllers/TestController";
-import { deleteSingleSalesEmployee, getAllSalesEmployees, getCreateSingleSalesEmployee, getSingleSalesEmployee, getSingleSalesEmployeeToDelete, postCreateSingleSalesEmployee } from "./controllers/SalesEmployeeController";
+import { deleteSingleSalesEmployee, getAllSalesEmployees, getCreateSingleSalesEmployee, getSingleSalesEmployee, getSingleSalesEmployeeToDelete, getSingleSalesEmployeeToEdit, postCreateSingleSalesEmployee, postEditSingleSalesEmployee } from "./controllers/SalesEmployeeController";
 import { percentageFilter } from "./filter/PercentageFilter";
 import { currencyFilter } from "./filter/CurrencyFilter";
 
@@ -49,3 +49,5 @@ app.post('/sales-employees/create', postCreateSingleSalesEmployee);
 app.get('/sales-employees/:id', getSingleSalesEmployee);
 app.get('/sales-employees/delete/:id', getSingleSalesEmployeeToDelete);
 app.post('/sales-employees/delete/:id', deleteSingleSalesEmployee);
+app.get('/sales-employees/edit/:id', getSingleSalesEmployeeToEdit);
+app.post('/sales-employees/edit/:id', postEditSingleSalesEmployee);

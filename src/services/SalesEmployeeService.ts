@@ -52,3 +52,21 @@ export const createSalesEmployee = async (salesEmployee: SalesEmployeeRequest): 
         throw new Error('Failed to delete sales employee');
     }
 }
+
+export const editSalesEmployee = async (salesEmployee: SalesEmployeeRequest, id: String): Promise<number> => {
+    try {
+        const salesEmployeeRequest = {
+            ...salesEmployee,
+            firstName: salesEmployee.fullName.split(' ')[0],
+            lastName: salesEmployee.fullName.split(' ').slice(1).join(' '),
+            commissionRate: salesEmployee.commissionRatePercentage / 100
+        };
+
+        const response: AxiosResponse = await axios.put("http://localhost:8080/api/sales-employee/" + id, salesEmployeeRequest);
+
+        return response.data;
+    } catch (e) {
+        if (e == "AxiosError: Request failed with status code 404") return null;
+        throw new Error('Failed to edit sales employee');
+    }
+}

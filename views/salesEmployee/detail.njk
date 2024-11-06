@@ -54,7 +54,7 @@
                   text: "Commission rate"
                 },
                 value: {
-                  text: salesEmployee.commissionRate | percentage
+                  text: salesEmployee.commissionRate | percentage + "%"
                 }
               },
               {
@@ -75,6 +75,13 @@
               }
             ]
           }) }}
+
+            <form action="/sales-employees/edit/{{ salesEmployee.salesEmployeeId }}">
+          {{ govukButton({
+            text: "Edit employee",
+            classes: "govuk-button--secondary"
+        }) }}
+          </form>
 
           <form action="/sales-employees/delete/{{ salesEmployee.salesEmployeeId }}">
           {{ govukButton({

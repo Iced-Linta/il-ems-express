@@ -1,3 +1,3 @@
 export const percentageFilter = (decimal: number): String => {
-    return `${decimal * 100}%`;
+    return `${decimal * 100}`;
 }

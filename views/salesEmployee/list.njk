@@ -34,7 +34,7 @@
                 {% for salesEmployee in salesEmployees %}
                     <tr class="govuk-table__row">
                         <td class="govuk-table__header"><a href="/sales-employees/{{salesEmployee.salesEmployeeId}}">{{ salesEmployee.firstName }} {{ salesEmployee.lastName }}</a></td>
-                        <td class="govuk-table__cell">{{ salesEmployee.commissionRate | percentage }}</td>
+                        <td class="govuk-table__cell">{{ salesEmployee.commissionRate | percentage }}%</td>
                       </tr>
                 {% endfor %}
             </tbody>
