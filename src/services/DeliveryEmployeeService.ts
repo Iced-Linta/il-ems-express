@@ -28,7 +28,7 @@ export const deleteDeliveryEmployee = async (id: String): Promise<void> => {
 
         return response.data;
     } catch (e) {
-        throw new Error('Failed to delete delivery employee');
+        throw new Error(`Failed to delete delivery employee ${id}`);
     }
 }
 
@@ -40,10 +40,9 @@ export const createDeliveryEmployee = async (deliveryEmployee: DeliveryEmployeeR
         };
 
         const response: AxiosResponse = await axios.post(`${process.env.API_URL}/delivery-employee`, deliveryEmployeeRequest);
-console.log("hi")
         return response.data;
     } catch (e) {
-        throw new Error('Failed to delete delivery employee');
+        throw new Error('Failed to create delivery employee');
     }
 }
 
@@ -58,6 +57,6 @@ export const editDeliveryEmployee = async (deliveryEmployee: DeliveryEmployeeReq
 
         return response.data;
     } catch (e) {
-        throw new Error('Failed to edit delivery employee');
+        throw new Error(`Failed to edit delivery employee ${id}`);
     }
 }
