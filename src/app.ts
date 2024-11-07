@@ -8,6 +8,8 @@ import { currencyFilter } from "./filter/CurrencyFilter";
 import { getSalesEmployeeCreateForm, getSalesEmployeeDeleteForm, getSalesEmployeeDetail, getSalesEmployeeEditForm, getSalesEmployeeList, postSalesEmployeeCreateForm, postSalesEmployeeDeleteForm, postSalesEmployeeEditForm } from "./controllers/SalesEmployeeController";
 import { checkSalesEmployeeExists } from "./middleware/CheckSalesEmployeeExistsMiddleware";
 
+import { getDeliveryEmployeeCreateForm, getDeliveryEmployeeDeleteForm, getDeliveryEmployeeDetail, getDeliveryEmployeeEditForm, getDeliveryEmployeeList, postDeliveryEmployeeCreateForm, postDeliveryEmployeeDeleteForm, postDeliveryEmployeeEditForm } from "./controllers/DeliveryEmployeeController";
+import { checkDeliveryEmployeeExists } from "./middleware/CheckDeliveryEmployeeExistsMiddleware";
 const app = express();
 
 const env = nunjucks.configure([
@@ -49,3 +51,13 @@ app.get('/sales-employees/delete/:id', checkSalesEmployeeExists(), getSalesEmplo
 app.post('/sales-employees/delete/:id', checkSalesEmployeeExists(), postSalesEmployeeDeleteForm);
 app.get('/sales-employees/edit/:id', checkSalesEmployeeExists(), getSalesEmployeeEditForm);
 app.post('/sales-employees/edit/:id', checkSalesEmployeeExists(), postSalesEmployeeEditForm);
+
+
+app.get('/delivery-employees', getDeliveryEmployeeList);
+app.get('/delivery-employees/create', getDeliveryEmployeeCreateForm);
+app.post('/delivery-employees/create', postDeliveryEmployeeCreateForm);
+app.get('/delivery-employees/:id', checkDeliveryEmployeeExists(), getDeliveryEmployeeDetail);
+app.get('/delivery-employees/delete/:id', checkDeliveryEmployeeExists(), getDeliveryEmployeeDeleteForm);
+app.post('/delivery-employees/delete/:id', checkDeliveryEmployeeExists(), postDeliveryEmployeeDeleteForm);
+app.get('/delivery-employees/edit/:id', checkDeliveryEmployeeExists(), getDeliveryEmployeeEditForm);
+app.post('/delivery-employees/edit/:id', checkDeliveryEmployeeExists(), postDeliveryEmployeeEditForm);
