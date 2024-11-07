@@ -24,6 +24,11 @@
             href: "/sales-employees",
             text: "Sales Employees",
             active: true
+          },
+          {
+            href: "/delivery-employees",
+            text: "Delivery Employees",
+            active: true
           }
         ]
       }) }}
@@ -32,9 +37,10 @@
 {% block beforeContent %}
     {{ govukPhaseBanner({
         tag: {
-            text: "Alpha"
+            text: "Prototype",
+            classes: "govuk-tag--blue"
         },
-        html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+        html: 'This is a prototype of a new service. Some parts do not work yet – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
     }) }}
 {% endblock %}
 

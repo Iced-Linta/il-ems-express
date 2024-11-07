@@ -1,0 +1,55 @@
+{% extends "templates/layout.njk" %}
+
+{% block beforeContent %}
+    {{ super() }}
+
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home",
+                href: "/"
+            },
+            {
+                text: "Delivery Employees",
+                href: "/delivery-employees"
+            }
+        ]
+        }) }}
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">Delivery Employees</h1>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Name</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+        
+                {% for deliveryEmployee in deliveryEmployees %}
+
+                {% set name = deliveryEmployee.name %}
+
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__header"><a href="/delivery-employees/{{deliveryEmployee.deliveryEmployeeId}}">{{ name }}</a></td>
+                      </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+    <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-heading-m">Related content</h2>
+
+        <ul class="govuk-list">
+            <li>
+                <a class="govuk-link" href="/delivery-employees/create">Create a delivery employee</a>
+            </li>
+          </ul>
+
+      </div>
+  </div>
+{% endblock %}
