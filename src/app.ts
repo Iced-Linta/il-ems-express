@@ -7,6 +7,9 @@ import { percentageFilter } from "./filter/PercentageFilter";
 import { currencyFilter } from "./filter/CurrencyFilter";
 import { getSalesEmployeeCreateForm, getSalesEmployeeDeleteForm, getSalesEmployeeDetail, getSalesEmployeeEditForm, getSalesEmployeeList, postSalesEmployeeCreateForm, postSalesEmployeeDeleteForm, postSalesEmployeeEditForm } from "./controllers/SalesEmployeeController";
 import { checkSalesEmployeeExists } from "./middleware/CheckSalesEmployeeExistsMiddleware";
+import { getLoginForm, getRegisterForm, postLoginForm, postRegisterForm } from "./controllers/AuthController";
+import { allowRoles } from "./middleware/AuthMiddleware";
+import { UserRole } from "./models/JwtToken";
 
 import { getDeliveryEmployeeCreateForm, getDeliveryEmployeeDeleteForm, getDeliveryEmployeeDetail, getDeliveryEmployeeEditForm, getDeliveryEmployeeList, postDeliveryEmployeeCreateForm, postDeliveryEmployeeDeleteForm, postDeliveryEmployeeEditForm } from "./controllers/DeliveryEmployeeController";
 import { checkDeliveryEmployeeExists } from "./middleware/CheckDeliveryEmployeeExistsMiddleware";
@@ -43,15 +46,23 @@ app.listen(3000, () => {
     console.log('Server started on port 3000');
 });
 
-app.get('/sales-employees', getSalesEmployeeList);
-app.get('/sales-employees/create', getSalesEmployeeCreateForm);
-app.post('/sales-employees/create', postSalesEmployeeCreateForm);
-app.get('/sales-employees/:id', checkSalesEmployeeExists(), getSalesEmployeeDetail);
-app.get('/sales-employees/delete/:id', checkSalesEmployeeExists(), getSalesEmployeeDeleteForm);
-app.post('/sales-employees/delete/:id', checkSalesEmployeeExists(), postSalesEmployeeDeleteForm);
-app.get('/sales-employees/edit/:id', checkSalesEmployeeExists(), getSalesEmployeeEditForm);
-app.post('/sales-employees/edit/:id', checkSalesEmployeeExists(), postSalesEmployeeEditForm);
+app.get('/', function(req, res){ res.render('index.njk'); });
 
+app.get('/login', getLoginForm);
+app.post('/login', postLoginForm);
+app.get('/register', getRegisterForm);
+app.post('/register', postRegisterForm);
+
+app.use(allowRoles([UserRole.User, UserRole.HR, UserRole.Sales, UserRole.Management]));
+
+app.get('/sales-employees', allowRoles([UserRole.HR]), getSalesEmployeeList);
+app.get('/sales-employees/create', allowRoles([UserRole.HR]), getSalesEmployeeCreateForm);
+app.post('/sales-employees/create', allowRoles([UserRole.HR]), postSalesEmployeeCreateForm);
+app.get('/sales-employees/:id', allowRoles([UserRole.HR]), checkSalesEmployeeExists(), getSalesEmployeeDetail);
+app.get('/sales-employees/delete/:id', allowRoles([UserRole.HR]), checkSalesEmployeeExists(), getSalesEmployeeDeleteForm);
+app.post('/sales-employees/delete/:id', allowRoles([UserRole.HR]), checkSalesEmployeeExists(), postSalesEmployeeDeleteForm);
+app.get('/sales-employees/edit/:id', allowRoles([UserRole.HR]), checkSalesEmployeeExists(), getSalesEmployeeEditForm);
+app.post('/sales-employees/edit/:id', allowRoles([UserRole.HR]), checkSalesEmployeeExists(), postSalesEmployeeEditForm);
 
 app.get('/delivery-employees', getDeliveryEmployeeList);
 app.get('/delivery-employees/create', getDeliveryEmployeeCreateForm);
@@ -61,3 +72,5 @@ app.get('/delivery-employees/delete/:id', checkDeliveryEmployeeExists(), getDeli
 app.post('/delivery-employees/delete/:id', checkDeliveryEmployeeExists(), postDeliveryEmployeeDeleteForm);
 app.get('/delivery-employees/edit/:id', checkDeliveryEmployeeExists(), getDeliveryEmployeeEditForm);
 app.post('/delivery-employees/edit/:id', checkDeliveryEmployeeExists(), postDeliveryEmployeeEditForm);
+
+app.get('*', function(req, res){ res.render('error/404.njk'); });

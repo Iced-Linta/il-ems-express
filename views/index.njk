@@ -1,0 +1,33 @@
+{% extends "templates/layout.njk" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      
+        <h1 class="govuk-heading-xl">Sign in to your Iced Linta Employee Management account</h1>
+
+  <p class="govuk-body">Sign in to your Iced Linta Employee Management account to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+    <li>see employees</li>
+    <li>see projects</li>
+    <li>see clients</li>
+    <li>add or update an employee</li>
+    <li>add or update a project</li>
+    <li>add or update a client</li>
+    <li>reassign delivery employees on projects</li>
+    </ul>
+
+    <p class="govuk-body">Use the username and password you set up when you first used the Iced Linta Employee Management System. You can <a class="govuk-link" href="/register">create an account</a> if you haven't already.</p>
+
+    {{ govukButton({
+        text: "Sign in",
+        href: "/login",
+        isStartButton: true
+      }) }}
+
+    </div>
+
+  </div>
+
+{% endblock %}
