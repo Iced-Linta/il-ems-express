@@ -17,44 +17,45 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="govuk-heading-xl">Deleting: {{ name }}</h1>
+    <h1 class="govuk-heading-xl">Deleting: {{ name }}</h1>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-         
-                {{ govukWarningText({
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+            {{ govukWarningText({
                 text: "This action is permanent and cannot be undone.",
                 iconFallbackText: "Warning"
                 }) }}
 
-                {{ govukRadios({
-  name: "whereDoYouLive",
-  fieldset: {
-    legend: {
-      text: ["Are you sure you wish to delete ", name, "?"] | join,
-      isPageHeading: false,
-      classes: "govuk-fieldset__legend--m"
-    }
-  },
-  items: [
-    {
-      value: "true",
-      text: "Yes"
-    },
-    {
-      value: "false",
-      text: "No"
-    }
-  ]
-}) }}
+            {{ govukRadios({
+                  name: "whereDoYouLive",
+                  fieldset: {
+                    legend: {
+                      text: ["Are you sure you wish to delete ", name, "?"] | join,
+                      isPageHeading: false,
+                      classes: "govuk-fieldset__legend--m"
+                    }
+                  },
 
-          <form method="post">
-            {{ govukButton({
+                  items: [
+                    {
+                      value: "true",
+                      text: "Yes"
+                    },
+                    {
+                      value: "false",
+                      text: "No"
+                    }
+                  ]
+                }) }}
+
+            <form method="post">
+                {{ govukButton({
                text: "Delete",
                classes: "govuk-button--warning"
             }) }}
-        </form>
+            </form>
 
+        </div>
     </div>
-  </div>
 {% endblock %}
