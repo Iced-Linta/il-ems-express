@@ -32,57 +32,56 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
          
-                {{ govukSummaryList({
-            rows: [
-            {
-                key: {
-                  text: "Employee number"
-                },
-                value: {
-                  text: deliveryEmployee.deliveryEmployeeId
-                }
-              },
-              {
-                key: {
-                  text: "Salary"
-                },
-                value: {
-                  text: "£" + deliveryEmployee.salary | currency
-                }
-              },
-              {
-                key: {
-                  text: "IBAN"
-                },
-                value: {
-                  text: deliveryEmployee.bankAccountNumber
-                }
-              },
-              {
-                key: {
-                  text: "National Insurance Number"
-                },
-                value: {
-                  text: deliveryEmployee.nationalInsuranceNumber
-                }
-              }
-            ]
-          }) }}
+        {{ govukSummaryList({
+                rows: [
+                {
+                    key: {
+                      text: "Employee number"
+                    },
+                    value: {
+                      text: deliveryEmployee.deliveryEmployeeId
+                    }
+                  },
+                  {
+                    key: {
+                      text: "Salary"
+                    },
+                    value: {
+                      text: "£" + deliveryEmployee.salary | currency
+                    }
+                  },
+                  {
+                    key: {
+                      text: "IBAN"
+                    },
+                    value: {
+                      text: deliveryEmployee.bankAccountNumber
+                    }
+                  },
+                  {
+                    key: {
+                      text: "National Insurance Number"
+                    },
+                    value: {
+                      text: deliveryEmployee.nationalInsuranceNumber
+                    }
+                  }
+                    ]
+            }) }}
 
             <form action="/delivery-employees/edit/{{ deliveryEmployee.deliveryEmployeeId }}">
           {{ govukButton({
             text: "Edit employee",
             classes: "govuk-button--secondary"
-        }) }}
+          }) }}
           </form>
 
           <form action="/delivery-employees/delete/{{ deliveryEmployee.deliveryEmployeeId }}">
           {{ govukButton({
             text: "Delete employee",
             classes: "govuk-button--warning"
-        }) }}
+          }) }}
           </form>
-
     </div>
   </div>
 {% endblock %}
