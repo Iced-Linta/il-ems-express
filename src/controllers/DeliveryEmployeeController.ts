@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { createDeliveryEmployee, deleteDeliveryEmployee, editDeliveryEmployee, getDeliveryEmployee, getDeliveryEmployees } from "../services/DeliveryEmployeeService";
 
-export const getDeliveryEmployeeList = async (req: express.Request, res: express.Response): Promise<void> => {
+export const getDeliveryEmployeeList = async (req: Request, res: Response): Promise<void> => {
     return res.render('deliveryEmployee/list.njk', { deliveryEmployees: await getDeliveryEmployees() });
 }
 
