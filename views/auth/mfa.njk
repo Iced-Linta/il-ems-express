@@ -1,0 +1,46 @@
+{% extends "templates/layout.njk" %}
+
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/password-input/macro.njk" import govukPasswordInput %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% block content %}
+
+<main class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+
+<div class="govuk-grid-column-two-thirds">
+
+  <h1 class="govuk-heading-xl">Multi-factor authentication</h1>
+
+  <form action="/login" class="form" method="post">
+
+  <p class="govuk-body">In order to sign in to your account, a one-time passcode (OTP) will be sent to the mobile number associated with your account.</p>
+  <p class="govuk-body">You must enter the OTP you receive within 10 minutes of requesting the code.</p>
+
+  <input type="hidden" id="mfaSid" name="mfaSid" value="{{ mfaSid }}">
+
+  {{ govukInput({
+    id: "mfaCode",
+    name: "mfaCode",
+    classes: "govuk-input--width-10",
+    errorMessage: {
+        text: "Enter a valid OTP code."
+    } if errormessage else false,
+    label: {
+        text: "OTP code"
+    }
+  }) }}
+
+    {{ govukButton({
+        text: "Submit",
+        preventDoubleClick: true
+      }) }}
+
+</form>
+
+  </div>
+</div>
+</main>
+
+{% endblock %}
