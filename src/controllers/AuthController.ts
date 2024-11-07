@@ -10,7 +10,7 @@ export const postLoginForm = async (req: express.Request, res: express.Response)
         req.session.token = await getToken(req.body);
         res.redirect('/sales-employees');
     } catch (e) {
-        res.locals.errormessage = e.message;
+        res.locals.errormessage = `Login error: ${e.message}`;
         res.render('auth/login.njk', req.body);
     }
 }
@@ -24,7 +24,7 @@ export const postRegisterForm = async (req: express.Request, res: express.Respon
         const user = await doRegister(req.body);
         res.render('auth/registerSuccess.njk', { user });
     } catch (e) {
-        res.locals.errormessage = e.message;
+        res.locals.errormessage = `Registration error: ${e.message}`;
         res.render('auth/register.njk', req.body);
     }
 }
