@@ -58,7 +58,6 @@ export const editDeliveryEmployee = async (deliveryEmployee: DeliveryEmployeeReq
 
         return response.data;
     } catch (e) {
-        if (e == "AxiosError: Request failed with status code 404") return null;
         throw new Error('Failed to edit delivery employee');
     }
 }
