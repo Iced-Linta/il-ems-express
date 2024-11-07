@@ -1,9 +1,9 @@
 {% extends "templates/layout.njk" %}
 
 {% block beforeContent %}
-    {{ super() }}
+  {{ super() }}
 
-    {{ govukBreadcrumbs({
+  {{ govukBreadcrumbs({
         items: [
             {
                 text: "Home",
@@ -22,32 +22,33 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <table class="govuk-table">
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header">Name</th>
-              </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-        
-                {% for client in clients %}
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
 
-                    <tr class="govuk-table__row">
-                        <td class="govuk-table__header"><a href="/client/{{client.clientId}}">{{ client.name }}</a></td>
-                      </tr>
-                {% endfor %}
-            </tbody>
-          </table>
+          {% for client in clients %}
+            <tr scope="row" class="govuk-table__row">
+              <td class="govuk-table__header">
+                <a href="/client/{{client.clientId}}">{{ client.name }}</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
     <div class="govuk-grid-column-one-third">
-        <h2 class="govuk-heading-m">Related content</h2>
+      <h2 class="govuk-heading-m">Related content</h2>
 
-        <ul class="govuk-list">
-            <li>
-                <a class="govuk-link" href="/client/create">Create a client</a>
-            </li>
-          </ul>
+      <ul class="govuk-list">
+        <li>
+          <a class="govuk-link" href="/client/create">Create a client</a>
+        </li>
+      </ul>
 
-      </div>
+    </div>
   </div>
 {% endblock %}

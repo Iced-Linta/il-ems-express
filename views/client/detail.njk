@@ -7,9 +7,9 @@
 {% set name = client.name %}
 
 {% block beforeContent %}
-    {{ super() }}
+  {{ super() }}
 
-    {{ govukBreadcrumbs({
+  {{ govukBreadcrumbs({
         items: [
             {
                 text: "Home",
@@ -32,8 +32,8 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-         
-                {{ govukSummaryList({
+
+      {{ govukSummaryList({
             rows: [
             {
                 key: {
@@ -46,19 +46,19 @@
             ]
           }) }}
 
-            <form action="/client/edit/{{ client.clientId }}">
-          {{ govukButton({
+      <form action="/client/edit/{{ client.clientId }}">
+        {{ govukButton({
             text: "Edit Client",
             classes: "govuk-button--secondary"
         }) }}
-          </form>
+      </form>
 
-          <form action="/client/delete/{{ client.clientId }}">
-          {{ govukButton({
+      <form action="/client/delete/{{ client.clientId }}">
+        {{ govukButton({
             text: "Delete client",
             classes: "govuk-button--warning"
         }) }}
-          </form>
+      </form>
 
     </div>
   </div>

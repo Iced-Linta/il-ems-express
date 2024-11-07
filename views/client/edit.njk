@@ -4,8 +4,6 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set name = client.name %}
-
 {% block beforeContent %}
     {{ super() }}
 
@@ -20,7 +18,7 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       
-        <h1 class="govuk-heading-xl">Editing: {{ name }}</h1>
+        <h1 class="govuk-heading-xl">Editing: {{ client.name }}</h1>
 
         <form class="form" method="post">
 
@@ -33,7 +31,7 @@
                 name: "name",
                 autocomplete: "name",
                 spellcheck: false,
-                value: name
+                value: client.name
             }) }}
 
     

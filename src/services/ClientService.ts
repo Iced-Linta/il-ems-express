@@ -24,9 +24,7 @@ export const getClient = async (id: String): Promise<ClientResponse[]> => {
 
 export const deleteClient = async (id: String): Promise<void> => {
     try {
-        const response: AxiosResponse = await axios.delete(`${process.env.API_URL}/client/${id}`);
-
-        return response.data;
+        await axios.delete(`${process.env.API_URL}/client/${id}`);
     } catch (e) {
         throw new Error('Failed to delete client');
     }
@@ -38,7 +36,7 @@ export const createClient = async (client: ClientRequest): Promise<number> => {
 
         return response.data;
     } catch (e) {
-        throw new Error('Failed to delete client');
+        throw new Error('Failed to create client');
     }
 }
 
