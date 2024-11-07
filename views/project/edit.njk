@@ -1,0 +1,141 @@
+{% extends "templates/layout.njk" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% set name = [project.name] %}
+
+{% block beforeContent %}
+    {{ super() }}
+
+    {{ govukBackLink({
+        text: "Back",
+        href: "/project"
+    }) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      
+        <h1 class="govuk-heading-xl">Editing: {{ name }}</h1>
+
+        <form class="form" method="post">
+
+            {{ govukInput({
+                label: {
+                    text: "name",
+                    classes: "govuk-label--m"
+                },
+                id: "name",
+                name: "name",
+                autocomplete: "name",
+                spellcheck: false,
+                value: name
+            }) }}
+
+            {{ govukInput({
+            label: {
+                text: "value",
+                classes: "govuk-label--m"
+            },
+            classes: "govuk-input--extra-letter-spacing",
+            hint: {
+                text: "You can ask the employee to ask their bank or check their bank statement"
+            },
+            id: "value",
+            name: "value",
+            spellcheck: false,
+                value: project.value
+            }) }}
+
+            {{ govukInput({
+            label: {
+                text: "Tech Lead ID",
+                classes: "govuk-label--m"
+            },
+            hint: {
+                text: "It’s on the employee's National Insurance card, benefit letter, payslip or P60 – for example, ‘QQ 12 34 56 C’"
+            },
+            classes: "govuk-input--width-10 govuk-input--extra-letter-spacing",
+            id: "techLeadId",
+            name: "techLeadId",
+            spellcheck: false,
+                value: project.techLeadId
+            }) }}
+
+             {{ govukInput({
+                id: "clientId",
+                name: "clientId",
+                label: {
+                  text: "Client ID",
+                    classes: "govuk-label--m"
+                },
+                suffix: {
+                  text: "%"
+                },
+                classes: "govuk-input--width-5",
+                spellcheck: false,
+                value: project.commissionRate | percentage
+              }) }}
+
+            {{ govukInput({
+                id: "salesEmployeeId",
+                name: "salesEmployeeId",
+                label: {
+                  text: "salesEmployeeId",
+                    classes: "govuk-label--m"
+                },
+                prefix: {
+                  text: "£"
+                },
+                classes: "govuk-input--width-5",
+                spellcheck: false,
+                value: project.salesEmployeeId
+              }) }}
+
+              {{ govukInput({
+                id: "startDate",
+                name: "startDate",
+                label: {
+                  text: "startDate",
+                    classes: "govuk-label--m"
+                },
+                prefix: {
+                  text: "!!!"
+                },
+                classes: "govuk-input--width-5",
+                spellcheck: false,
+                value: project.startDate
+              }) }}
+
+              {{ govukInput({
+                id: "finishDate",
+                name: "finishDate",
+                label: {
+                  text: "finishDate",
+                    classes: "govuk-label--m"
+                },
+                prefix: {
+                  text: "!!!"
+                },
+                classes: "govuk-input--width-5",
+                spellcheck: false,
+                value: project.finishDate
+              }) }}
+
+            </br></br>
+
+            {{ govukButton({
+                text: "Submit",
+                preventDoubleClick: true
+              }) }}
+        </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}

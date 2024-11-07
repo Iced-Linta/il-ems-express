@@ -1,0 +1,127 @@
+{% extends "templates/layout.njk" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+
+{% block beforeContent %}
+    {{ super() }}
+
+    {{ govukBackLink({
+        text: "Back",
+        href: "/project"
+    }) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      
+        <h1 class="govuk-heading-xl">Create a Project</h1>
+
+        <form class="form" method="post">
+
+            {{ govukInput({
+                label: {
+                    text: "Name",
+                    classes: "govuk-label--m"
+                },
+                id: "name",
+                name: "name",
+                autocomplete: "name",
+                spellcheck: false
+            }) }}
+
+            {{ govukInput({
+            label: {
+                text: "Value",
+                classes: "govuk-label--m"
+            },
+            classes: "govuk-input--extra-letter-spacing",
+            hint: {
+                text: "For Example £285,000"
+            },
+            id: "value",
+            name: "value",
+            spellcheck: false
+            }) }}
+
+            {{ govukInput({
+            label: {
+                text: "Tech Lead ID",
+                classes: "govuk-label--m"
+            },
+            classes: "govuk-input--width-5",
+            id: "techLeadId",
+            name: "techLeadId",
+            spellcheck: false
+            }) }}
+
+             {{ govukInput({
+                id: "clientId",
+                name: "clientId",
+                label: {
+                  text: "Client ID",
+                    classes: "govuk-label--m"
+                },
+                classes: "govuk-input--width-5",
+                spellcheck: false
+              }) }}
+
+            {{ govukInput({
+                id: "salesEmployeeId",
+                name: "salesEmployeeId",
+                label: {
+                  text: "Sales Employe ID",
+                    classes: "govuk-label--m"
+                },
+                classes: "govuk-input--width-5",
+                spellcheck: false
+              }) }}
+
+              
+              {{ govukDateInput({
+                id: "startDate",
+                namePrefix: "startDate",
+                fieldset: {
+                    legend: {
+                    text: "Please enter start Date",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--l"
+                    }
+                },
+                hint: {
+                    text: "For example, 27 3 2007"
+                }
+                }) }}
+
+            {{ govukDateInput({
+                id: "finishDate",
+                namePrefix: "finishDate",
+                fieldset: {
+                    legend: {
+                    text: "Finish Date",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--l"
+                    }
+                },
+                hint: {
+                    text: "For example, 27 3 2007"
+                }
+                }) }}
+
+            </br></br>
+
+            {{ govukButton({
+                text: "Submit",
+                preventDoubleClick: true
+              }) }}
+        </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}

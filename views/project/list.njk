@@ -1,0 +1,57 @@
+{% extends "templates/layout.njk" %}
+
+{% block beforeContent %}
+    {{ super() }}
+
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home",
+                href: "/"
+            },
+            {
+                text: "Project",
+                href: "/project"
+            }
+        ]
+        }) }}
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">Project</h1>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Name</th>
+                <th scope="col" class="govuk-table__header">Value</th>
+                <th scope="col" class="govuk-table__header">Client</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+        
+                {% for project in projects %}
+
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__header"><a href="/projects/{{project.projectId}}">{{ project.name }}</a></td>
+                        <td class="govuk-table__cell">£{{ project.value | currency }}</td>
+                        <td class="govuk-table__cell">{{ project.clientId}}</td>
+                      </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+    <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-heading-m">Related content</h2>
+
+        <ul class="govuk-list">
+            <li>
+                <a class="govuk-link" href="/projects/create">Create a project</a>
+            </li>
+          </ul>
+
+      </div>
+  </div>
+{% endblock %}

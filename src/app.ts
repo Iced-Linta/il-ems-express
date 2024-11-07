@@ -7,6 +7,8 @@ import { percentageFilter } from "./filter/PercentageFilter";
 import { currencyFilter } from "./filter/CurrencyFilter";
 import { getSalesEmployeeCreateForm, getSalesEmployeeDeleteForm, getSalesEmployeeDetail, getSalesEmployeeEditForm, getSalesEmployeeList, postSalesEmployeeCreateForm, postSalesEmployeeDeleteForm, postSalesEmployeeEditForm } from "./controllers/SalesEmployeeController";
 import { checkSalesEmployeeExists } from "./middleware/CheckSalesEmployeeExistsMiddleware";
+import { getProjectCreateForm, getProjectDeleteForm, getProjectDetail, getProjectEditForm, getProjectList, postProjectCreateForm, postProjectDeleteForm, postProjectEditForm } from "./controllers/ProjectController";
+import { checkProjectExists } from "./middleware/CheckProjectExistsMiddleware";
 
 const app = express();
 
@@ -49,3 +51,12 @@ app.get('/sales-employees/delete/:id', checkSalesEmployeeExists(), getSalesEmplo
 app.post('/sales-employees/delete/:id', checkSalesEmployeeExists(), postSalesEmployeeDeleteForm);
 app.get('/sales-employees/edit/:id', checkSalesEmployeeExists(), getSalesEmployeeEditForm);
 app.post('/sales-employees/edit/:id', checkSalesEmployeeExists(), postSalesEmployeeEditForm);
+
+app.get('/projects', getProjectList);
+app.get('/projects/create', getProjectCreateForm);
+app.post('/projects/create', postProjectCreateForm);
+app.get('/projects/:id', checkProjectExists(), getProjectDetail);
+app.get('/projects/delete/:id', checkProjectExists(), getProjectDeleteForm);
+app.post('/projects/delete/:id', checkProjectExists(), postProjectDeleteForm);
+app.get('/projects/edit/:id', checkProjectExists(), getProjectEditForm);
+app.post('/projects/edit/:id', checkProjectExists(), postProjectEditForm);

@@ -1,0 +1,71 @@
+{% extends "templates/layout.njk" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block beforeContent %}
+    {{ super() }}
+
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home",
+                href: "/"
+            },
+            {
+                text: "Projects",
+                href: "/projects"
+            },
+            {
+                text: project.name,
+                href: "/projects/" + project.projectId
+            }
+        ]
+        }) }}
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">Viewing: {{ project.name }}</h1>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+         
+                {{ govukSummaryList({
+            rows: [
+            {
+                key: {
+                  text: "Project number"
+                },
+                value: {
+                  text:project.projectId
+                }
+              },
+            {
+                key: {
+                  text: "Value"
+                },
+                value: {
+                  text: "£" + project.value | currency
+                }
+              }
+            ]
+          }) }}
+
+            <form action="/projects/edit/{{ project.projectId }}">
+          {{ govukButton({
+            text: "Edit project",
+            classes: "govuk-button--secondary"
+        }) }}
+          </form>
+
+          <form action="/projects/delete/{{ project.projectId }}">
+          {{ govukButton({
+            text: "Delete project",
+            classes: "govuk-button--warning"
+        }) }}
+          </form>
+
+    </div>
+  </div>
+{% endblock %}
