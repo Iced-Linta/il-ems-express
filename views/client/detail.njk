@@ -1,0 +1,65 @@
+{% extends "templates/layout.njk" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set name = client.name %}
+
+{% block beforeContent %}
+    {{ super() }}
+
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home",
+                href: "/"
+            },
+            {
+                text: "Clients",
+                href: "/client"
+            },
+            {
+                text: name,
+                href: "/client/" + client.clientId
+            }
+        ]
+        }) }}
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">Viewing: {{ name }}</h1>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+         
+                {{ govukSummaryList({
+            rows: [
+            {
+                key: {
+                  text: "Client number"
+                },
+                value: {
+                  text: client.clientId
+                }
+              }
+            ]
+          }) }}
+
+            <form action="/client/edit/{{ client.clientId }}">
+          {{ govukButton({
+            text: "Edit Client",
+            classes: "govuk-button--secondary"
+        }) }}
+          </form>
+
+          <form action="/client/delete/{{ client.clientId }}">
+          {{ govukButton({
+            text: "Delete client",
+            classes: "govuk-button--warning"
+        }) }}
+          </form>
+
+    </div>
+  </div>
+{% endblock %}
