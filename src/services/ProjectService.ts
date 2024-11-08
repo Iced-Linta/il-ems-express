@@ -8,11 +8,11 @@ export const getProjects = async (): Promise<ProjectResponse[]> => {
 
         return response.data;
     } catch (e) {
-        throw new Error('Failed to get project');
+        throw new Error('Failed to get projects');
     }
 }
 
-export const getProject = async (id: String): Promise<ProjectResponse[]> => {
+export const getProject = async (id: String): Promise<ProjectResponse> => {
     try {
         const response: AxiosResponse = await axios.get(`${process.env.API_URL}/project/${id}`);
 
@@ -38,7 +38,7 @@ export const createProject = async (project: ProjectRequest): Promise<number> =>
 
         return response.data;
     } catch (e) {
-        throw new Error('Failed to delete project');
+        throw new Error('Failed to delete projects');
     }
 }
 
