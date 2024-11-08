@@ -1,0 +1,96 @@
+{% extends "templates/layout.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% set name = deliveryEmployee.name %}
+
+{% block beforeContent %}
+    {{ super() }}
+
+    {{ govukBackLink({
+        text: "Back",
+        href: "/delivery-employees"
+    }) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      
+        <h1 class="govuk-heading-xl">Editing: {{ name }}</h1>
+
+        <form class="form" method="post">
+
+            {{ govukInput({
+                label: {
+                    text: "Full name",
+                    classes: "govuk-label--m"
+                },
+                id: "name",
+                name: "name",
+                autocomplete: "name",
+                spellcheck: false,
+                value: fullName
+            }) }}
+
+                        {{ govukInput({
+                id: "salary",
+                name: "salary",
+                label: {
+                  text: "Salary",
+                    classes: "govuk-label--m"
+                },
+                prefix: {
+                  text: "£"
+                },
+                classes: "govuk-input--width-5",
+                spellcheck: false,
+                value: deliveryEmployee.salary
+              }) }}
+
+            {{ govukInput({
+            label: {
+                text: "IBAN",
+                classes: "govuk-label--m"
+            },
+            classes: "govuk-input--extra-letter-spacing",
+            hint: {
+                text: "You can ask the employee to ask their bank or check their bank statement"
+            },
+            id: "bankAccountNumber",
+            name: "bankAccountNumber",
+            spellcheck: false,
+                value: deliveryEmployee.bankAccountNumber
+            }) }}
+
+            {{ govukInput({
+            label: {
+                text: "National Insurance number",
+                classes: "govuk-label--m"
+            },
+            hint: {
+                text: "It’s on the employee's National Insurance card, benefit letter, payslip or P60 – for example, ‘QQ 12 34 56 C’"
+            },
+            classes: "govuk-input--width-10 govuk-input--extra-letter-spacing",
+            id: "nationalInsuranceNumber",
+            name: "nationalInsuranceNumber",
+            spellcheck: false,
+                value: deliveryEmployee.nationalInsuranceNumber
+            }) }}
+
+            </br></br>
+
+            {{ govukButton({
+                text: "Submit",
+                preventDoubleClick: true
+              }) }}
+        </form>
+
+    </div>
+
+  </div>
+
+{% endblock %}

@@ -9,7 +9,12 @@ import { getSalesEmployeeCreateForm, getSalesEmployeeDeleteForm, getSalesEmploye
 import { checkSalesEmployeeExists } from "./middleware/CheckSalesEmployeeExistsMiddleware";
 import { getProjectCreateForm, getProjectDeleteForm, getProjectDetail, getProjectEditForm, getProjectList, postProjectCreateForm, postProjectDeleteForm, postProjectEditForm } from "./controllers/ProjectController";
 import { checkProjectExists } from "./middleware/CheckProjectExistsMiddleware";
+import { getLoginForm, getRegisterForm, postLoginForm, postRegisterForm } from "./controllers/AuthController";
+import { allowRoles } from "./middleware/AuthMiddleware";
+import { UserRole } from "./models/JwtToken";
 
+import { getDeliveryEmployeeCreateForm, getDeliveryEmployeeDeleteForm, getDeliveryEmployeeDetail, getDeliveryEmployeeEditForm, getDeliveryEmployeeList, postDeliveryEmployeeCreateForm, postDeliveryEmployeeDeleteForm, postDeliveryEmployeeEditForm } from "./controllers/DeliveryEmployeeController";
+import { checkDeliveryEmployeeExists } from "./middleware/CheckDeliveryEmployeeExistsMiddleware";
 const app = express();
 
 const env = nunjucks.configure([
@@ -43,14 +48,32 @@ app.listen(3000, () => {
     console.log('Server started on port 3000');
 });
 
-app.get('/sales-employees', getSalesEmployeeList);
-app.get('/sales-employees/create', getSalesEmployeeCreateForm);
-app.post('/sales-employees/create', postSalesEmployeeCreateForm);
-app.get('/sales-employees/:id', checkSalesEmployeeExists(), getSalesEmployeeDetail);
-app.get('/sales-employees/delete/:id', checkSalesEmployeeExists(), getSalesEmployeeDeleteForm);
-app.post('/sales-employees/delete/:id', checkSalesEmployeeExists(), postSalesEmployeeDeleteForm);
-app.get('/sales-employees/edit/:id', checkSalesEmployeeExists(), getSalesEmployeeEditForm);
-app.post('/sales-employees/edit/:id', checkSalesEmployeeExists(), postSalesEmployeeEditForm);
+app.get('/', function(req, res){ res.render('index.njk'); });
+
+app.get('/login', getLoginForm);
+app.post('/login', postLoginForm);
+app.get('/register', getRegisterForm);
+app.post('/register', postRegisterForm);
+
+app.use(allowRoles([UserRole.User, UserRole.HR, UserRole.Sales, UserRole.Management]));
+
+app.get('/sales-employees', allowRoles([UserRole.HR]), getSalesEmployeeList);
+app.get('/sales-employees/create', allowRoles([UserRole.HR]), getSalesEmployeeCreateForm);
+app.post('/sales-employees/create', allowRoles([UserRole.HR]), postSalesEmployeeCreateForm);
+app.get('/sales-employees/:id', allowRoles([UserRole.HR]), checkSalesEmployeeExists(), getSalesEmployeeDetail);
+app.get('/sales-employees/delete/:id', allowRoles([UserRole.HR]), checkSalesEmployeeExists(), getSalesEmployeeDeleteForm);
+app.post('/sales-employees/delete/:id', allowRoles([UserRole.HR]), checkSalesEmployeeExists(), postSalesEmployeeDeleteForm);
+app.get('/sales-employees/edit/:id', allowRoles([UserRole.HR]), checkSalesEmployeeExists(), getSalesEmployeeEditForm);
+app.post('/sales-employees/edit/:id', allowRoles([UserRole.HR]), checkSalesEmployeeExists(), postSalesEmployeeEditForm);
+
+app.get('/delivery-employees', getDeliveryEmployeeList);
+app.get('/delivery-employees/create', getDeliveryEmployeeCreateForm);
+app.post('/delivery-employees/create', postDeliveryEmployeeCreateForm);
+app.get('/delivery-employees/:id', checkDeliveryEmployeeExists(), getDeliveryEmployeeDetail);
+app.get('/delivery-employees/delete/:id', checkDeliveryEmployeeExists(), getDeliveryEmployeeDeleteForm);
+app.post('/delivery-employees/delete/:id', checkDeliveryEmployeeExists(), postDeliveryEmployeeDeleteForm);
+app.get('/delivery-employees/edit/:id', checkDeliveryEmployeeExists(), getDeliveryEmployeeEditForm);
+app.post('/delivery-employees/edit/:id', checkDeliveryEmployeeExists(), postDeliveryEmployeeEditForm);
 
 app.get('/projects', getProjectList);
 app.get('/projects/create', getProjectCreateForm);
@@ -60,3 +83,5 @@ app.get('/projects/delete/:id', checkProjectExists(), getProjectDeleteForm);
 app.post('/projects/delete/:id', checkProjectExists(), postProjectDeleteForm);
 app.get('/projects/edit/:id', checkProjectExists(), getProjectEditForm);
 app.post('/projects/edit/:id', checkProjectExists(), postProjectEditForm);
+
+app.get('*', function(req, res){ res.render('error/404.njk'); });
