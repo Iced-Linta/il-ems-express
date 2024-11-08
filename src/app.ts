@@ -13,6 +13,9 @@ import { UserRole } from "./models/JwtToken";
 
 import { getDeliveryEmployeeCreateForm, getDeliveryEmployeeDeleteForm, getDeliveryEmployeeDetail, getDeliveryEmployeeEditForm, getDeliveryEmployeeList, postDeliveryEmployeeCreateForm, postDeliveryEmployeeDeleteForm, postDeliveryEmployeeEditForm } from "./controllers/DeliveryEmployeeController";
 import { checkDeliveryEmployeeExists } from "./middleware/CheckDeliveryEmployeeExistsMiddleware";
+import { checkClientExists } from "./middleware/CheckClientExistsMiddleware";
+import { getClientCreateForm, getClientDeleteForm, getClientDetail, getClientEditForm, getClientList, postClientCreateForm, postClientDeleteForm, postClientEditForm } from "./controllers/ClientController";
+
 const app = express();
 
 const env = nunjucks.configure([
@@ -64,13 +67,22 @@ app.post('/sales-employees/delete/:id', allowRoles([UserRole.HR]), checkSalesEmp
 app.get('/sales-employees/edit/:id', allowRoles([UserRole.HR]), checkSalesEmployeeExists(), getSalesEmployeeEditForm);
 app.post('/sales-employees/edit/:id', allowRoles([UserRole.HR]), checkSalesEmployeeExists(), postSalesEmployeeEditForm);
 
-app.get('/delivery-employees', getDeliveryEmployeeList);
-app.get('/delivery-employees/create', getDeliveryEmployeeCreateForm);
-app.post('/delivery-employees/create', postDeliveryEmployeeCreateForm);
-app.get('/delivery-employees/:id', checkDeliveryEmployeeExists(), getDeliveryEmployeeDetail);
-app.get('/delivery-employees/delete/:id', checkDeliveryEmployeeExists(), getDeliveryEmployeeDeleteForm);
-app.post('/delivery-employees/delete/:id', checkDeliveryEmployeeExists(), postDeliveryEmployeeDeleteForm);
-app.get('/delivery-employees/edit/:id', checkDeliveryEmployeeExists(), getDeliveryEmployeeEditForm);
-app.post('/delivery-employees/edit/:id', checkDeliveryEmployeeExists(), postDeliveryEmployeeEditForm);
+app.get('/delivery-employees', allowRoles([UserRole.HR]), getDeliveryEmployeeList);
+app.get('/delivery-employees/create', allowRoles([UserRole.HR]), getDeliveryEmployeeCreateForm);
+app.post('/delivery-employees/create', allowRoles([UserRole.HR]), postDeliveryEmployeeCreateForm);
+app.get('/delivery-employees/:id', allowRoles([UserRole.HR]), checkDeliveryEmployeeExists(), getDeliveryEmployeeDetail);
+app.get('/delivery-employees/delete/:id', allowRoles([UserRole.HR]), checkDeliveryEmployeeExists(), getDeliveryEmployeeDeleteForm);
+app.post('/delivery-employees/delete/:id', allowRoles([UserRole.HR]), checkDeliveryEmployeeExists(), postDeliveryEmployeeDeleteForm);
+app.get('/delivery-employees/edit/:id', allowRoles([UserRole.HR]), checkDeliveryEmployeeExists(), getDeliveryEmployeeEditForm);
+app.post('/delivery-employees/edit/:id', allowRoles([UserRole.HR]), checkDeliveryEmployeeExists(), postDeliveryEmployeeEditForm);
+
+app.get('/client', allowRoles([UserRole.Sales]), getClientList);
+app.get('/client/create', allowRoles([UserRole.Sales]), getClientCreateForm);
+app.post('/client/create', allowRoles([UserRole.Sales]), postClientCreateForm);
+app.get('/client/:id', allowRoles([UserRole.Sales]), checkClientExists(), getClientDetail);
+app.get('/client/delete/:id', allowRoles([UserRole.Sales]), checkClientExists(), getClientDeleteForm);
+app.post('/client/delete/:id', allowRoles([UserRole.Sales]), checkClientExists(), postClientDeleteForm);
+app.get('/client/edit/:id', allowRoles([UserRole.Sales]), checkClientExists(), getClientEditForm);
+app.post('/client/edit/:id', allowRoles([UserRole.Sales]), checkClientExists(), postClientEditForm);
 
 app.get('*', function(req, res){ res.render('error/404.njk'); });

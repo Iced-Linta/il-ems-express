@@ -1,0 +1,26 @@
+{% extends "templates/layout.njk" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukPanel({
+        titleText: "Client created",
+        html: ["New employee number:<br><strong>", clientId, "</strong>"] | join
+      }) }}
+
+      <p class="govuk-body">You have successfully created a client.</p>
+
+      <h2 class="govuk-heading-m">What happens next</h2>
+
+      <p class="govuk-body">
+        You can now return to the <a href="/client">client list</a> to continue managing clients.
+      </p>
+    </div>
+  </div>
+
+{% endblock %}
