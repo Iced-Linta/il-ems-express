@@ -4,8 +4,6 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% set name = client.name %}
-
 {% block beforeContent %}
   {{ super() }}
 
@@ -20,7 +18,7 @@
                 href: "/client"
             },
             {
-                text: name,
+                text: client.name,
                 href: "/client/" + client.clientId
             }
         ]
@@ -28,7 +26,7 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="govuk-heading-xl">Viewing: {{ name }}</h1>
+  <h1 class="govuk-heading-xl">Viewing: {{ client.name }}</h1>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">

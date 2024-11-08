@@ -15,14 +15,14 @@
 
 {% block content %}
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      
-        <h1 class="govuk-heading-xl">Editing: {{ client.name }}</h1>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
 
-        <form class="form" method="post">
+            <h1 class="govuk-heading-xl">Editing: {{ client.name }}</h1>
 
-            {{ govukInput({
+            <form class="form" method="post">
+
+                {{ govukInput({
                 label: {
                     text: "Full name",
                     classes: "govuk-label--m"
@@ -34,18 +34,17 @@
                 value: client.name
             }) }}
 
-    
+            </br>
+        </br>
 
-            </br></br>
-
-            {{ govukButton({
+        {{ govukButton({
                 text: "Submit",
                 preventDoubleClick: true
               }) }}
-        </form>
+    </form>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
 {% endblock %}
