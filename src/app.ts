@@ -7,6 +7,8 @@ import { percentageFilter } from "./filter/PercentageFilter";
 import { currencyFilter } from "./filter/CurrencyFilter";
 import { getSalesEmployeeCreateForm, getSalesEmployeeDeleteForm, getSalesEmployeeDetail, getSalesEmployeeEditForm, getSalesEmployeeList, postSalesEmployeeCreateForm, postSalesEmployeeDeleteForm, postSalesEmployeeEditForm } from "./controllers/SalesEmployeeController";
 import { checkSalesEmployeeExists } from "./middleware/CheckSalesEmployeeExistsMiddleware";
+import { getProjectCreateForm, getProjectDeleteForm, getProjectDetail, getProjectEditForm, getProjectList, postProjectCreateForm, postProjectDeleteForm, postProjectEditForm } from "./controllers/ProjectController";
+import { checkProjectExists } from "./middleware/CheckProjectExistsMiddleware";
 import { getLoginForm, getRegisterForm, postLoginForm, postRegisterForm } from "./controllers/AuthController";
 import { allowRoles } from "./middleware/AuthMiddleware";
 import { UserRole } from "./models/JwtToken";
@@ -72,5 +74,14 @@ app.get('/delivery-employees/delete/:id', checkDeliveryEmployeeExists(), getDeli
 app.post('/delivery-employees/delete/:id', checkDeliveryEmployeeExists(), postDeliveryEmployeeDeleteForm);
 app.get('/delivery-employees/edit/:id', checkDeliveryEmployeeExists(), getDeliveryEmployeeEditForm);
 app.post('/delivery-employees/edit/:id', checkDeliveryEmployeeExists(), postDeliveryEmployeeEditForm);
+
+app.get('/projects', getProjectList);
+app.get('/projects/create', getProjectCreateForm);
+app.post('/projects/create', postProjectCreateForm);
+app.get('/projects/:id', checkProjectExists(), getProjectDetail);
+app.get('/projects/delete/:id', checkProjectExists(), getProjectDeleteForm);
+app.post('/projects/delete/:id', checkProjectExists(), postProjectDeleteForm);
+app.get('/projects/edit/:id', checkProjectExists(), getProjectEditForm);
+app.post('/projects/edit/:id', checkProjectExists(), postProjectEditForm);
 
 app.get('*', function(req, res){ res.render('error/404.njk'); });

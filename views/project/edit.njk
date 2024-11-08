@@ -9,85 +9,123 @@
 
     {{ govukBackLink({
         text: "Back",
-        href: "/sales-employees"
+        href: "/project"
     }) }}
 {% endblock %}
 
 {% block content %}
 
+ <h1 class="govuk-heading-xl">Editing: {{ project.name }}</h1>
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      
-        <h1 class="govuk-heading-xl">Create a Sales Employee</h1>
 
         <form class="form" method="post">
 
             {{ govukInput({
                 label: {
-                    text: "Full name",
+                    text: "name",
                     classes: "govuk-label--m"
                 },
-                id: "full-name",
-                name: "fullName",
+                id: "name",
+                name: "name",
                 autocomplete: "name",
-                spellcheck: false
+                spellcheck: false,
+                value: project.name
             }) }}
 
             {{ govukInput({
             label: {
-                text: "IBAN",
+                text: "value",
                 classes: "govuk-label--m"
             },
             classes: "govuk-input--extra-letter-spacing",
             hint: {
                 text: "You can ask the employee to ask their bank or check their bank statement"
             },
-            id: "bankAccountNo",
-            name: "bankAccountNo",
-            spellcheck: false
+            id: "value",
+            name: "value",
+            spellcheck: false,
+                value: project.value
             }) }}
 
             {{ govukInput({
             label: {
-                text: "National Insurance number",
+                text: "Tech Lead ID",
                 classes: "govuk-label--m"
             },
             hint: {
                 text: "It’s on the employee's National Insurance card, benefit letter, payslip or P60 – for example, ‘QQ 12 34 56 C’"
             },
             classes: "govuk-input--width-10 govuk-input--extra-letter-spacing",
-            id: "nationalInsuranceNo",
-            name: "nationalInsuranceNo",
-            spellcheck: false
+            id: "techLeadId",
+            name: "techLeadId",
+            spellcheck: false,
+                value: project.techLeadId
             }) }}
 
              {{ govukInput({
-                id: "commissionRatePercentage",
-                name: "commissionRatePercentage",
+                id: "clientId",
+                name: "clientId",
                 label: {
-                  text: "Commission rate",
+                  text: "Client ID",
                     classes: "govuk-label--m"
                 },
                 suffix: {
                   text: "%"
                 },
                 classes: "govuk-input--width-5",
-                spellcheck: false
+                spellcheck: false,
+                value: project.commissionRate | percentage
               }) }}
 
             {{ govukInput({
-                id: "salary",
-                name: "salary",
+                id: "salesEmployeeId",
+                name: "salesEmployeeId",
                 label: {
-                  text: "Salary",
+                  text: "salesEmployeeId",
                     classes: "govuk-label--m"
                 },
                 prefix: {
                   text: "£"
                 },
                 classes: "govuk-input--width-5",
-                spellcheck: false
+                spellcheck: false,
+                value: project.salesEmployeeId
               }) }}
+
+              {{ govukInput({
+                id: "startDate",
+                name: "startDate",
+                label: {
+                  text: "startDate",
+                    classes: "govuk-label--m"
+                },
+                prefix: {
+                  text: "!!!"
+                },
+                classes: "govuk-input--width-5",
+                spellcheck: false,
+                value: project.startDate
+              }) }}
+
+              {{ govukInput({
+                id: "finishDate",
+                name: "finishDate",
+                label: {
+                  text: "finishDate",
+                    classes: "govuk-label--m"
+                },
+                prefix: {
+                  text: "!!!"
+                },
+                classes: "govuk-input--width-5",
+                spellcheck: false,
+                value: project.finishDate
+              }) }}
+
+            </br></br>
+
             {{ govukButton({
                 text: "Submit",
                 preventDoubleClick: true
